@@ -1,11 +1,592 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <title>My Site</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRX 能量服务</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      line-height: 1.7;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .hero {
+      padding: 48px 0 28px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    }
+
+    .hero-box {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 24px;
+      padding: 36px 24px;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.06);
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ecfeff;
+      color: #0f766e;
+      border: 1px solid #a5f3fc;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      position: relative;
+    }
+
+    .dot::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: rgba(16, 185, 129, 0.35);
+      animation: pulse 1.6s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 0.7;
+      }
+      100% {
+        transform: scale(2.6);
+        opacity: 0;
+      }
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 38px;
+      line-height: 1.25;
+      font-weight: 900;
+      color: #0f172a;
+    }
+
+    .hero p {
+      margin: 16px auto 0;
+      max-width: 760px;
+      font-size: 17px;
+      color: #475569;
+    }
+
+    .hero-strong {
+      color: #dc2626;
+      font-weight: 800;
+    }
+
+    .btn-row {
+      margin-top: 28px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 160px;
+      padding: 14px 22px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 800;
+      transition: 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #111827, #334155);
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+    }
+
+    .btn-secondary:hover {
+      background: #f8fafc;
+    }
+
+    .section {
+      padding: 26px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 900;
+      margin: 0 0 18px;
+      color: #0f172a;
+    }
+
+    .section-desc {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 26px;
+      color: #64748b;
+      font-size: 16px;
+    }
+
+    .notice {
+      background: linear-gradient(135deg, #fff7ed, #fffbeb);
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+      border-radius: 20px;
+      padding: 22px 18px;
+      box-shadow: 0 10px 24px rgba(154, 52, 18, 0.06);
+    }
+
+    .notice h2 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      color: #9a3412;
+    }
+
+    .notice .big {
+      font-size: 18px;
+      font-weight: 800;
+      color: #c2410c;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 22px 18px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.04);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: #0f172a;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 15px;
+      color: #64748b;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .step {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 20px 16px;
+      text-align: center;
+    }
+
+    .step-num {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 18px;
+      background: #0f172a;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .step h4 {
+      margin: 0 0 8px;
+      font-size: 17px;
+      color: #0f172a;
+    }
+
+    .step p {
+      margin: 0;
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    .address-box {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 22px 18px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.04);
+      text-align: center;
+    }
+
+    .address-label {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 10px;
+    }
+
+    .address {
+      font-size: 17px;
+      font-weight: 800;
+      color: #0f172a;
+      word-break: break-all;
+      margin-bottom: 16px;
+    }
+
+    .mini {
+      font-size: 14px;
+      color: #64748b;
+      margin-top: 10px;
+    }
+
+    .cta-box {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: #fff;
+      border-radius: 24px;
+      padding: 34px 22px;
+      text-align: center;
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.18);
+    }
+
+    .cta-box h2 {
+      margin: 0 0 10px;
+      font-size: 30px;
+    }
+
+    .cta-box p {
+      margin: 0 auto 22px;
+      max-width: 720px;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 16px;
+    }
+
+    .footer {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 13px;
+      padding: 18px 0 40px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(30px);
+      opacity: 0;
+      background: rgba(15, 23, 42, 0.95);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: 0.25s ease;
+      z-index: 999;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .steps {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding: 26px 0 18px;
+      }
+
+      .hero-box,
+      .card,
+      .step,
+      .address-box,
+      .notice,
+      .cta-box {
+        border-radius: 18px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      .grid,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .btn-row {
+        flex-direction: column;
+      }
+
+      .address {
+        font-size: 15px;
+      }
+    }
+  </style>
 </head>
-<body style="text-align:center; margin-top:100px; font-family:sans-serif;">
-  <h1>🚀 成功了！</h1>
-  <p>我的网站已经上线</p>
+<body>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-box">
+        <div class="badge">
+          <span class="dot"></span>
+          当前服务可用
+        </div>
+
+        <h1>TRX 能量租赁服务<br>转账更省 更方便</h1>
+
+        <p>
+          USDT-TRC20 转账时，如果账户能量不足，通常会额外消耗 TRX 作为手续费。
+          提前补充能量，可降低转账损耗，适合经常转账和临时急用用户。
+        </p>
+
+        <div class="btn-row">
+          <a href="#service" class="btn btn-primary">立即查看服务</a>
+          <a href="#address" class="btn btn-secondary">查看地址</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="notice">
+        <h2>3TRX 转 U 文本说明</h2>
+        <div class="big">转 3 TRX 可用于 1 笔转 U 场景</div>
+        <div style="margin-top:10px;">
+          如账户能量不足，转账时会直接扣除 TRX。先补充对应资源后再进行转 U，
+          能有效减少额外手续费消耗，适合临时转账、频繁转账和日常钱包使用。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="service">
+    <div class="container">
+      <h2 class="section-title">为什么选择 TRX 能量服务</h2>
+      <p class="section-desc">
+        针对 TRC20 转账手续费高、临时转账不方便、长期质押占用资金等问题，提供更灵活的使用方式。
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>减少手续费消耗</h3>
+          <p>在能量不足时，链上会直接消耗 TRX。提前补充资源，可降低单笔转账损耗。</p>
+        </div>
+
+        <div class="card">
+          <h3>适合转 U 用户</h3>
+          <p>适用于日常 USDT-TRC20 转账需求，尤其适合经常进行转 U 的钱包用户。</p>
+        </div>
+
+        <div class="card">
+          <h3>无需长期质押</h3>
+          <p>不需要长期锁定大量 TRX，按需使用，更适合短期和灵活场景。</p>
+        </div>
+
+        <div class="card">
+          <h3>操作简单直接</h3>
+          <p>页面清晰，流程直观，手机和电脑都可使用，减少重复操作成本。</p>
+        </div>
+
+        <div class="card">
+          <h3>适合临时急用</h3>
+          <p>当钱包需要马上转账时，提前处理能量问题，可避免因资源不足影响操作。</p>
+        </div>
+
+        <div class="card">
+          <h3>多场景可用</h3>
+          <p>适合个人钱包、商户收款、日常转账和短期资源补充等多种使用场景。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">使用步骤</h2>
+      <p class="section-desc">流程清晰，按步骤操作即可。</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h4>复制地址</h4>
+          <p>先复制下方 TRX 地址，准备钱包操作。</p>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <h4>转入 TRX</h4>
+          <p>根据当前需求转入对应数量，用于处理转账资源问题。</p>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <h4>等待处理</h4>
+          <p>完成后按你的转账计划继续进行 TRC20 操作。</p>
+        </div>
+
+        <div class="step">
+          <div class="step-num">4</div>
+          <h4>发起转 U</h4>
+          <p>资源到位后即可进行 1 笔转 U 或日常转账使用。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="address">
+    <div class="container">
+      <h2 class="section-title">TRX 地址</h2>
+      <p class="section-desc">复制地址后可直接在钱包中使用。</p>
+
+      <div class="address-box">
+        <div class="address-label">收款地址</div>
+        <div class="address" id="walletAddress">TMvpxey61TNFrku4WdDpBUDEpJp54yUo18</div>
+
+        <div class="btn-row" style="margin-top: 0;">
+          <button class="btn btn-primary" onclick="copyAddress()">复制地址</button>
+          <button class="btn btn-secondary" onclick="copyText('3 TRX','3 TRX 已复制')">复制 3 TRX 文本</button>
+        </div>
+
+        <div class="mini">
+          提示：转账前请仔细核对地址、网络与数量，避免因填写错误造成损失。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-box">
+        <h2>需要转 U？先处理 TRX 能量问题</h2>
+        <p>
+          对于经常进行 USDT-TRC20 转账的用户，提前补充资源通常更省心。
+          页面已适配手机与电脑，复制地址即可使用。
+        </p>
+        <div class="btn-row">
+          <a href="#address" class="btn btn-primary">立即复制地址</a>
+          <a href="#service" class="btn btn-secondary">查看服务说明</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    © 2026 TRX 能量服务页面
+  </div>
+
+  <div class="toast" id="toast">已复制</div>
+
+  <script>
+    function showToast(text) {
+      var toast = document.getElementById("toast");
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(function () {
+        toast.classList.remove("show");
+      }, 1800);
+    }
+
+    function fallbackCopy(text, successText) {
+      var textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+
+      try {
+        document.execCommand("copy");
+        showToast(successText);
+      } catch (e) {
+        alert("复制失败，请手动复制");
+      }
+
+      document.body.removeChild(textarea);
+    }
+
+    function copyText(text, successText) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(function () {
+          showToast(successText);
+        }).catch(function () {
+          fallbackCopy(text, successText);
+        });
+      } else {
+        fallbackCopy(text, successText);
+      }
+    }
+
+    function copyAddress() {
+      var address = document.getElementById("walletAddress").innerText.trim();
+      copyText(address, "地址已复制");
+    }
+  </script>
 </body>
 </html>
